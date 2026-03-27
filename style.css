@@ -1,0 +1,245 @@
+/* ============================================
+   星埜イヨリ Landing Page - style.css
+   エンジュシティ・夜の診療室 Design System
+   ============================================ */
+
+/*
+ * Step 1: デザインの「設計図」を定義する
+ *
+ * CSS変数を使って、このページで使う色や
+ * フォントをまとめて定義しています。
+ * エンジュシティの夜、燐光、霧をイメージした
+ * カラーパレットです。
+ */
+
+:root {
+    /* カラーパレット（エンジュシティ・夜想） */
+    --color-bg:        #090d10;  /* 背景: 深夜の藍黒 */
+    --color-surface:   #111820;  /* カード等: 少し明るい夜色 */
+    --color-accent:    #7eb8c9;  /* アクセント: 青白い燐光・霊火色 */
+    --color-accent-dim:#4a7f8f;  /* 燐光の暗い版（ホバー等に） */
+    --color-text:      #d8e4e8;  /* メインテキスト: 冷たく澄んだオフホワイト */
+    --color-text-dim:  #607880;  /* サブテキスト: 霧のなかのグレー */
+
+    /* タイポグラフィ */
+    --font-heading: 'Cormorant Garamond', 'Noto Serif JP', serif;
+    --font-body:    'Outfit', 'Noto Sans JP', sans-serif;
+}
+
+
+/* ============================================
+ * 全体のベーススタイル
+ * ============================================ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    line-height: 1.8;
+}
+
+
+/* ============================================
+ * Google Fonts の読み込み
+ * ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Outfit:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&family=Noto+Serif+JP:wght@400&display=swap');
+
+
+/* ============================================
+ * ヒーローセクション
+ * ============================================ */
+
+#hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(
+        180deg,
+        #090d10 0%,
+        #0a1218 100%          /* 下に向かってほんのり深い青に */
+    );
+}
+
+#hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    text-shadow: 0 0 40px rgba(126, 184, 201, 0.3);  /* 青白い燐光の光彩 */
+    position: relative;
+}
+
+/* ============================================
+ * 燐光フリッカー効果（グリッチの代わりに）
+ * エレノアのサイバーグリッチを、
+ * より静かで幽玄な「揺らぎ」に置き換えています。
+ * ============================================ */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+/* 青白い揺らぎ（左） */
+.glitch::before {
+    left: 1px;
+    text-shadow: -1px 0 rgba(180, 220, 240, 0.8);
+    animation: flicker-1 4s infinite linear alternate-reverse;
+}
+
+/* 深青の揺らぎ（右） */
+.glitch::after {
+    left: -1px;
+    text-shadow: 1px 0 rgba(80, 140, 180, 0.6);
+    animation: flicker-2 3s infinite linear alternate-reverse;
+}
+
+/* 燐光の揺らぎ アニメーション 1 */
+@keyframes flicker-1 {
+    0%   { clip-path: inset(20% 0 30% 0); opacity: 0.4; }
+    20%  { clip-path: inset(60% 0 10% 0); opacity: 0.6; }
+    40%  { clip-path: inset(40% 0 50% 0); opacity: 0.3; }
+    60%  { clip-path: inset(80% 0 5%  0); opacity: 0.5; }
+    80%  { clip-path: inset(10% 0 70% 0); opacity: 0.4; }
+    100% { clip-path: inset(30% 0 20% 0); opacity: 0.6; }
+}
+
+/* 燐光の揺らぎ アニメーション 2 */
+@keyframes flicker-2 {
+    0%   { clip-path: inset(15% 0 80% 0); opacity: 0.3; }
+    25%  { clip-path: inset(85% 0 2%  0); opacity: 0.5; }
+    50%  { clip-path: inset(45% 0 45% 0); opacity: 0.4; }
+    75%  { clip-path: inset(2%  0 85% 0); opacity: 0.6; }
+    100% { clip-path: inset(80% 0 15% 0); opacity: 0.3; }
+}
+
+#hero p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--color-text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+/* CTAボタン */
+#hero button {
+    margin-top: 2.5rem;
+    padding: 0.8rem 2.5rem;
+    background: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#hero button:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+}
+
+
+/* ============================================
+ * アバウトセクション
+ * ============================================ */
+
+#about {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+#about h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+}
+
+#about p {
+    color: var(--color-text-dim);
+    font-size: 1.05rem;
+}
+
+
+/* ============================================
+ * ギャラリーセクション
+ * ============================================ */
+
+#gallery {
+    padding: 6rem 2rem;
+    background-color: var(--color-surface);
+    text-align: center;
+}
+
+#gallery h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--color-accent);
+    margin-bottom: 3rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.gallery-grid img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 4px;
+    opacity: 0.75;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.gallery-grid img:hover {
+    opacity: 1;
+    transform: scale(1.03);
+}
+
+
+/* ============================================
+ * フッター
+ * ============================================ */
+
+footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid #1a2530;
+}
+
+footer p {
+    color: var(--color-text-dim);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+}
